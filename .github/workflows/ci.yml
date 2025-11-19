@@ -1,4 +1,4 @@
-name: Flutter CI/CD Pipeline
+name: Flutter CI/CD
 
 on:
   push:
@@ -19,16 +19,19 @@ jobs:
     - name: Set up Flutter
       uses: subosito/flutter-action@v2
       with:
-        flutter-version: '3.0.5'  # specify your Flutter version here
+        flutter-version: '3.0.0'  # Change to your Flutter version
 
     - name: Install dependencies
-      run: |
-        flutter pub get
+      run: flutter pub get
 
     - name: Run tests
-      run: |
-        flutter test
+      run: flutter test
 
     - name: Build APK
-      run: |
-        flutter build apk
+      run: flutter build apk --release
+
+    - name: Upload APK artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: app-apk
+        path: build/app/outputs/flutter-apk/app-release.apk
