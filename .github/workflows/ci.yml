@@ -10,22 +10,27 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Checkout the code
       - name: Checkout code
         uses: actions/checkout@v2
 
+      # Set up Flutter
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.0.0'
 
+      # Install dependencies
       - name: Install dependencies
         run: flutter pub get
 
+      # Build APK
       - name: Build APK
         run: flutter build apk --release
 
+      # Upload build artifacts (use v2 to avoid deprecation)
       - name: Upload build artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v2  # Switch to v2
         with:
           name: flutter-build
           path: build/app/outputs/flutter-apk/app-release.apk
