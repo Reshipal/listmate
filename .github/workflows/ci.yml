@@ -28,9 +28,9 @@ jobs:
       - name: Build APK
         run: flutter build apk --release
 
-      # Upload build artifacts (use v2 to avoid deprecation)
+      # Upload build artifacts (using the latest supported upload-artifact)
       - name: Upload build artifacts
-        uses: actions/upload-artifact@v2  # Switch to v2
+        uses: github/actions/upload-artifact@v3  # Using v3 for artifact upload
         with:
           name: flutter-build
           path: build/app/outputs/flutter-apk/app-release.apk
