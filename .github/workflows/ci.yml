@@ -8,28 +8,32 @@ on:
 
 jobs:
   build:
+
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      # 1. Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install Flutter
+      # 2. Set up Flutter
+      - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: "3.38.1"
+          flutter-version: '3.38.1'
 
+      # 3. Install dependencies
       - name: Install dependencies
         run: flutter pub get
 
-      - name: Run tests
-        run: flutter test || true
+      # 4. Run analyzer
+      - name: Analyze code
+        run: flutter analyze
 
+      # 5. Run tests
+      - name: Run tests
+        run: flutter test --coverage
+
+      # 6. Build APK (optional)
       - name: Build APK
         run: flutter build apk --release
-
-      - name: Upload APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: app-release-apk
-          path: build/app/outputs/flutter-apk/app-release.apk
